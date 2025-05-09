@@ -19,7 +19,6 @@ model User {
   updatedAt          DateTime       @updatedAt
   feedbacks          Feedback[]
   notifications      Notification[]
-  Bus                Bus[]
 }
 
 model Driver {
@@ -47,10 +46,9 @@ model Bus {
   currentLoad Int
   location    String
   updatedAt   DateTime   @updatedAt
-  driver      User       @relation(fields: [driverId], references: [id])
+  driver      Driver     @relation(fields: [driverId], references: [id])
   route       Route      @relation(fields: [routeId], references: [id])
   feedbacks   Feedback[]
-  Driver      Driver     @relation(fields: [driverId], references: [id])
 }
 
 model Route {
