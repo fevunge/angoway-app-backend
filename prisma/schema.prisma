@@ -13,9 +13,23 @@ model User {
   email              String         @unique
   number             String         @unique
   password           String
+  url_foto_de_perfil String?
+  role               String?        @default("USER")
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+  feedbacks          Feedback[]
+  notifications      Notification[]
+  Bus                Bus[]
+}
+
+model Driver {
+  id                 Int            @id @default(autoincrement())
+  name               String
+  email              String         @unique
+  number             String         @unique
+  password           String
   disability         String?
   url_foto_de_perfil String?
-  role               String         @default("USER")
   createdAt          DateTime       @default(now())
   updatedAt          DateTime       @updatedAt
   buses              Bus[]
@@ -36,6 +50,7 @@ model Bus {
   driver      User       @relation(fields: [driverId], references: [id])
   route       Route      @relation(fields: [routeId], references: [id])
   feedbacks   Feedback[]
+  Driver      Driver     @relation(fields: [driverId], references: [id])
 }
 
 model Route {
@@ -67,6 +82,8 @@ model Feedback {
   createdAt DateTime @default(now())
   bus       Bus      @relation(fields: [busId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+  Driver    Driver?  @relation(fields: [driverId], references: [id])
+  driverId  Int?
 }
 
 model Notification {
@@ -77,4 +94,6 @@ model Notification {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+  Driver    Driver?  @relation(fields: [driverId], references: [id])
+  driverId  Int?
 }

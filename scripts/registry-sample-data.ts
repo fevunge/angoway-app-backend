@@ -40,29 +40,34 @@ async function createSampleData() {
           password: hashedPassword,
           role: 'ADMIN',
         },
-        {
+      ]      
+    });
+
+    const drivers = await prisma.driver.createMany({
+        data: [
+            {
           name: 'Orlando',
           email: 'orlando@gmail.com',
           number: '911223344',
           password: hashedPassword,
-          role: 'DRIVER',
         },
         {
           name: 'Laurentino',
           email: 'laurentino@gmail.com',
           number: '922334455',
           password: hashedPassword,
-          role: 'DRIVER',
         },
       ],
     });
+
     console.log('Users created:', users.count);
+    console.log('Drivers created', drivers.count);
 
     // Fetch driver users for bus assignment
-    const orlando = await prisma.user.findUnique({
+    const orlando = await prisma.driver.findUnique({
       where: { email: 'orlando@gmail.com' },
     });
-    const laurentino = await prisma.user.findUnique({
+    const laurentino = await prisma.driver.findUnique({
       where: { email: 'laurentino@gmail.com' },
     });
 
